@@ -1,0 +1,78 @@
+DROP TABLE IF EXISTS s_comment;
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS author;
+DROP TABLE IF EXISTS ganre;
+DROP TABLE IF EXISTS s_user_roles;
+DROP TABLE IF EXISTS s_user;
+DROP TABLE IF EXISTS s_role;
+
+CREATE TABLE author (
+    id SERIAL PRIMARY KEY,
+    firstname CHARACTER VARYING(20) NOT NULL,
+    lastname CHARACTER VARYING(40) NOT NULL,
+    birthday DATE NOT NULL,
+    date_of_death DATE
+);
+
+CREATE TABLE ganre (
+    id SERIAL PRIMARY KEY,
+    name CHARACTER VARYING(20) NOT NULL
+);
+
+CREATE TABLE book (
+    id SERIAL PRIMARY KEY,
+    name CHARACTER VARYING(40) NOT NULL,
+    description CHARACTER VARYING(200),
+    release_date SMALLINT NOT NULL,
+    author_id INT NOT NULL,
+    ganre_id INT NOT NULL,
+    CONSTRAINT ganre_id FOREIGN KEY(ganre_id) 
+    REFERENCES ganre(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT author_id FOREIGN KEY(author_id) 
+    REFERENCES author(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE s_role (
+    id SMALLINT PRIMARY KEY,
+    name CHARACTER VARYING(20) NOT NULL
+);
+
+CREATE TABLE s_user (
+    id SERIAL PRIMARY KEY,
+    username CHARACTER VARYING(30) NOT NULL,
+    email CHARACTER VARYING(100),
+    password CHARACTER VARYING(100) NOT NULL,
+    enabled BOOLEAN NOT NULL
+);
+
+CREATE TABLE s_user_roles (
+    user_id INTEGER NOT NULL,
+    roles_id SMALLINT NOT NULL,
+    CONSTRAINT user_id_fk FOREIGN KEY(user_id) 
+    REFERENCES s_user(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT role_id_fk FOREIGN KEY(roles_id) 
+    REFERENCES s_role(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE    
+);
+
+CREATE TABLE s_comment (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    book_id INTEGER NOT NULL,
+    text CHARACTER VARYING(200) NOT NULL,
+    CONSTRAINT user_id_fk_comment FOREIGN KEY(user_id) 
+    REFERENCES s_user(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT book_id_fk_comment FOREIGN KEY(book_id) 
+    REFERENCES book(id) 
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);

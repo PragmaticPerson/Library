@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Add new author</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+        <div th:insert="fragments/navigation :: navigation"></div>
+		<div>
+			<h2 class="text-center my-4">Add new author</h2>
+            <div>
+                <div th:if="${error != null}">
+                  <div class="p-3 mb-2 bg-warning text-dark">
+                      <span th:text="${error}"></span><br>
+                  </div>
+                </div>
+            </div>
+			<div class="d-flex justify-content-center m-3">
+				<form class="w-50" action="#" th:action="@{/authors/add}" th:object="${author}" method="post">
+					<div class="form-group row">
+						<label class="col">First name:</label>
+						<input class="col" type="text" th:field="*{firstName}" required/>
+					</div>
+					<div class="form-group row">
+                        <label class="col">Last name:</label>
+                        <input class="col" type="text" th:field="*{lastName}" required/>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col">Birthday:</label>
+                        <input class="col" type="date" th:field="*{birthday}" required/>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col">Date of death:</label>
+                        <input class="col" type="date" th:field="*{dateOfDeath}"/>
+                    </div>
+                    
+					<div class="form-group row">
+						<input class="btn m-1 btn-success col" type="submit" value="Save" />
+						<input class="btn m-1 btn-secondary col" type="reset" value="Reset" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

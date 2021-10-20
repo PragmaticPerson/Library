@@ -1,0 +1,127 @@
+<!DOCTYPE html> 
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Edit book</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div th:insert="fragments/navigation :: navigation"></div>
+		<div>
+			<h2 class="text-center my-4">Edit book</h2>
+			<div sec:authorize="hasRole('ADMIN')" class="d-flex justify-content-center m-3">
+	            <div>
+	                <div th:if="${error != null}">
+	                    <div class="p-3 mb-2 bg-warning text-dark">
+	                        <span th:text="${error}"></span><br>
+	                    </div>
+	                </div>
+	            </div>
+				<form class="w-50" action="#" th:action="@{/books/{id}(id=${book.id})}" th:object="${book}" method="post">
+					<div class="form-group row">
+						<label class="col">id:</label>
+						<input class="col" type="text" th:field="*{id}" disabled="disabled" required />
+					</div>
+					<div class="form-group row">
+						<label class="col">Name:</label> 
+						<input class="col" type="text" th:field="*{name}" required />
+					</div>
+					<div class="form-group row">
+						<label class="col">Description:</label>
+						<textarea class="col" th:field="*{description}" placeholder="Description up to 200 characters" maxlength="200"
+							required></textarea>
+					</div>
+					<div class="form-group row">
+						<label class="col">Release date:</label> 
+						<input class="col" type="text" th:field="*{releaseDate}" required />
+					</div>
+					<div class="form-group row">
+						<label class="col">Author:</label> 
+						<select class="col pl-3" id="selectAuthor" th:field="*{author}" required>
+							<option value="-1" hidden="">Please select...</option>
+							<option th:each="author : ${authors}" th:value="${author.id}"
+								th:text="${author.firstName + ' ' + author.lastName}"></option>
+						</select>
+					</div>
+					<div class="form-group row">
+						<label class="col">Ganre:</label> 
+						<select class="col pl-3" id="selectGanre" th:field="*{ganre}" required>
+							<option value="-1" hidden="">Please select...</option>
+							<option th:each="ganre : ${ganres}" th:value="${ganre.id}"
+								th:text="${ganre.name}"></option>
+						</select>
+					</div>
+
+					<div class="form-group row">
+						<input class="btn m-1 btn-success col" type="submit" value="Save" />
+						<input class="btn m-1 btn-secondary col" type="reset" value="Reset" />
+					</div>
+				</form>
+			</div>
+			<div sec:authorize="!isAuthenticated() || hasRole('USER')">
+				<table class="table table-striped">
+					<thead class="px-5">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Name</th>
+							<th scope="col">Description</th>
+							<th scope="col">Release date</th>
+							<th scope="col">Author</th>
+							<th scope="col">Genre</th>
+						</tr>
+					</thead>
+					<tbody class="px-5">
+						<tr th:if="${book == null}">
+							<td colspan="4" class="text-center">No books available</td>
+						</tr>
+						<tr>
+							<td><span th:text="${book.id}"></span></td>
+							<td><span th:text="${book.name}"></span></td>
+							<td><span th:text="${book.description}"></span></td>
+							<td><span th:text="${book.releaseDate}"></span></td>
+							<td><span th:text="${book.author.firstName + ' ' + book.author.lastName}"></span></td>
+                            <td><span th:text="${book.ganre.name}"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+            <div class="comments-block w-100">
+                <div class="row">
+                    <div class="d-flex justify-content-start">
+                        <h3>Comments:</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div th:if="${error != null}">
+                        <div class="p-3 mb-2 bg-warning text-dark">
+                            <span th:text="${error}"></span><br>
+                        </div>
+                    </div>
+                    <form sec:authorize="isAuthenticated()" class="w-50" action="#" th:action="@{/books/{id}/comments(id=${book.id})}" th:object="${comment}" method="post">
+                        <div class="input-group mb-3">
+                          <input class="btn btn-outline-secondary" type="submit" id="button-addon1" value="Send" />
+                          <input type="text" class="form-control" placeholder="Your message" th:field="*{text}" aria-describedby="button-addon1" />
+                        </div>
+                    </form>
+                    <div th:if="${#lists.isEmpty(comments)}" class="w-100 border border-1 border-info p-1 py-2 m-1">
+                        <div class="d-inline">
+                            <h5>No comments available</h5>
+                        </div>
+                    </div>
+                    <div th:each="comment : ${comments}" class="w-100 border border-1 border-info p-1 py-2 m-1">
+                        <div class="d-inline">
+                            <h6><span th:text="${comment.user.username}"></span></h6>
+                        </div>
+                        <div class="d-inline">
+                            <p th:text="${comment.text}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>

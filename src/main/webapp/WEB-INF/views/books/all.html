@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>All books</title>
+<link rel="stylesheet" href="resources/css/style.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="container">
+		<div th:insert="fragments/navigation :: navigation"></div>
+		<div class="row">
+			<div class="col mx-2 my-3">
+			     <div class="d-flex justify-content-between">
+				     <div class="d-block">
+						<a class="btn btn-primary" href="/books/add">Add book</a>
+					</div>
+					<div class="text-center">
+						<h3>All books</h3>
+					</div>
+					<div class="text-right">
+						<form action="#" th:action="@{/books}" method="get">
+							<span>By name:</span> 
+							<input type="text" name="bookName" placeholder="Enter book name" /> 
+							<input type="submit" value="Find" />
+						</form>
+					</div>
+			     </div>
+			</div>
+		</div>
+		<div class="d-flex m-auto">
+			<table class="table table-striped">
+				<thead class="px-5">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Name</th>
+						<th scope="col">Description</th>
+						<th scope="col">Release date</th>
+						<th scope="col">Author</th>
+						<th scope="col">Genre</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody class="px-5">
+					<tr th:if="${#lists.isEmpty(books)}">
+						<td colspan="4" class="text-center">No books available</td>
+					</tr>
+					<tr th:each="book : ${books}">
+						<td><span th:text="${book.id}"></span></td>
+						<td>
+						   <a th:href="@{/books/{id}(id=${book.id})}">
+						      <span th:text="${book.name}"></span>
+						   </a>
+					    </td>
+						<td><span th:text="${book.description}"></span></td>
+						<td><span th:text="${book.releaseDate}"></span></td>
+						<td><span
+							th:text="${book.author.firstName + ' ' + book.author.lastName}"></span></td>
+						<td><span th:text="${book.ganre.name}"></span></td>
+						<td class="w-100 d-inline-flex justify-content-end">
+							<div sec:authorize="hasRole('ADMIN')">
+								<a class="fa fa-pencil custom-btn m-1 mx-2"
+									th:href="@{/books/{id}(id=${book.id})}"></a>
+								<form action="#" th:action="@{/books/delete}" method="post">
+									<input type="hidden" th:value="${book.id}" name="id" />
+									<button class="delete-btn custom-btn" type="submit"
+										name="delete">
+										<span class='fa fa-trash'></span>
+									</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

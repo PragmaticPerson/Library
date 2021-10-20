@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>Add new book</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+        <div th:insert="fragments/navigation :: navigation"></div>
+		<div>
+			<h2 class="text-center my-4">Add new book</h2>
+            <div>
+                <div th:if="${error != null}">
+                  <div class="p-3 mb-2 bg-warning text-dark">
+                      <span th:text="${error}"></span><br>
+                  </div>
+                </div>
+            </div>
+			<div class="d-flex justify-content-center m-3">
+				<form class="w-50" action="#" th:action="@{/books/add}" th:object="${book}" method="post">
+					<div class="form-group row">
+						<label class="col">Name:</label>
+						<input class="col" type="text" th:field="*{name}" required/>
+					</div>
+					<div class="form-group row">
+                        <label class="col">Description:</label>
+                        <textarea class="col" th:field="*{description}" placeholder="Description up to 200 characters" maxlength="200" required></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col">Release date:</label>
+                        <input class="col" type="text" th:field="*{releaseDate}" required/>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col">Author:</label>
+                        <select class="col pl-3" id="selectAuthor" th:field="*{author}" required>
+                            <option value="-1" hidden="">Please select...</option>
+                            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.firstName + ' ' + author.lastName}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col">Ganre:</label>
+                        <select class="col pl-3" id="selectGanre" th:field="*{ganre}" required>
+                            <option value="-1" hidden="">Please select...</option>
+                            <option th:each="ganre : ${ganres}" th:value="${ganre.id}" th:text="${ganre.name}"></option>
+                        </select>
+                    </div>
+                    
+					<div class="form-group row">
+						<input class="btn m-1 btn-success col" type="submit" value="Save" />
+						<input class="btn m-1 btn-secondary col" type="reset" value="Reset" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
