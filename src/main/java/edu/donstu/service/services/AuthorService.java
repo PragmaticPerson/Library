@@ -5,32 +5,36 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.donstu.dao.AuthorRepository;
+import edu.donstu.dao.AuthorHibernateDao;
 import edu.donstu.service.models.Author;
 
 @Service
 public class AuthorService {
+    private AuthorHibernateDao authorRepository;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    public AuthorService(AuthorHibernateDao authorRepository) {
+        super();
+        this.authorRepository = authorRepository;
+    }
 
     public List<Author> findAll() {
         return authorRepository.findAll();
     }
 
     public Author getOne(int id) {
-        return authorRepository.getById(id);
+        return getOne(id);
     }
 
     public void add(Author author) {
-        authorRepository.saveAndFlush(author);
+        authorRepository.add(author);
     }
 
     public void update(Author author) {
-        authorRepository.saveAndFlush(author);
+        authorRepository.update(author);
     }
 
     public void delete(int id) {
-        authorRepository.deleteById(id);
+        authorRepository.delete(getOne(id));
     }
 }
