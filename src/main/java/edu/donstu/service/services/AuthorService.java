@@ -23,7 +23,7 @@ public class AuthorService {
     }
 
     public Author getOne(int id) {
-        return getOne(id);
+        return authorRepository.getOne(id);
     }
 
     public void add(Author author) {

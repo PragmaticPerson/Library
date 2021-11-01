@@ -10,17 +10,22 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import edu.donstu.dao.security.UserRepository;
+import edu.donstu.dao.security.UserHibernateDao;
 import edu.donstu.service.models.security.Role;
 import edu.donstu.service.models.security.User;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
+    private UserHibernateDao userRepository;
     private BCryptPasswordEncoder encoder;
+
+    @Autowired
+    public UserService(UserHibernateDao userRepository, BCryptPasswordEncoder encoder) {
+        super();
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,15 +57,15 @@ public class UserService implements UserDetailsService {
 
         newUser.setRoles(Collections.singleton(new Role(2, "ROLE_USER")));
         newUser.setPassword(encoder.encode(newUser.getPassword()));
-        userRepository.save(newUser);
+        userRepository.add(newUser);
         return true;
     }
 
     public User get(int id) {
-        return userRepository.getById(id);
+        return userRepository.getOne(id);
     }
 
     public void delete(int id) {
-        userRepository.deleteById(id);
+        userRepository.delete(get(id));
     }
 }

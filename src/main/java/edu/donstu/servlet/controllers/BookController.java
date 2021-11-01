@@ -3,7 +3,6 @@ package edu.donstu.servlet.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -59,13 +58,13 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public String addPagePost(@ModelAttribute @Valid Book book, BindingResult bindingResult, Model model) {
+    public String addPagePost(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", bindingResult.getAllErrors().get(0).getDefaultMessage());
             model.addAttribute("book", book);
             addAllCustomAttributes(model);
             return "books/add";
-        }        
+        }
         bookService.add(book);
         return "redirect:/books";
     }
@@ -73,8 +72,7 @@ public class BookController {
     @GetMapping("/{id}")
     public String editPageGet(@PathVariable int id, Model model) {
         Book book = bookService.getOne(id);
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("book", book);
             addAllCustomAttributes(model);
@@ -88,7 +86,8 @@ public class BookController {
     }
 
     @PostMapping("/{id}")
-    public String editPagePost(@ModelAttribute @Valid Book book, BindingResult bindingResult, Model model) {
+    public String editPagePost(@ModelAttribute @Valid Book book, BindingResult bindingResult,
+            @ModelAttribute Comment comment, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("error", bindingResult.getAllErrors().get(0).getDefaultMessage());
             model.addAttribute("book", book);
@@ -110,7 +109,7 @@ public class BookController {
         }
 
         String username;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         } else {
@@ -133,6 +132,5 @@ public class BookController {
     private void addAllCustomAttributes(Model model) {
         model.addAttribute("authors", authorService.findAll());
         model.addAttribute("ganres", ganreService.findAll());
-
     }
 }

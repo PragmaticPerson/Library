@@ -30,7 +30,7 @@ public class AuthorHibernateDao {
     }
 
     public Author getOne(int id) {
-        return sessionFactory.getCurrentSession().load(Author.class, id);
+        return sessionFactory.getCurrentSession().find(Author.class, id);
     }
 
     public void add(Author author) {
@@ -44,7 +44,7 @@ public class AuthorHibernateDao {
     public void update(Author author) {
         sessionFactory.getCurrentSession().update(author);
     }
-    
+
     public void delete(Author author) {
         sessionFactory.getCurrentSession().delete(author);
     }

@@ -46,6 +46,7 @@ public class HibernateConfiguration {
     private Properties hibernateProperties() {
         var properties = new Properties();
         properties.setProperty("hibernate.dialect", environment.getProperty("spring.jpa.database-platform"));
+        properties.setProperty("javax.persistence.validation.mode", "none");
         return properties;
     }
 }
