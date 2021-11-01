@@ -7,16 +7,12 @@ import javax.validation.ValidatorFactory;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
 @SpringBootConfiguration
-@EntityScan("edu.donstu.service.models")
-@EnableJpaRepositories("edu.donstu.dao")
 public class SpringConfig {
     @Bean
     public SpringResourceTemplateResolver templateResolver(ApplicationContext applicationContext) {
