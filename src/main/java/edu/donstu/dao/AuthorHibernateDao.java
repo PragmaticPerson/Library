@@ -24,7 +24,7 @@ public class AuthorHibernateDao {
     public List<Author> findAll() {
         List<Author> authors;
         try (Session session = sessionFactory.openSession()) {
-            authors = session.createQuery("SELECT a FROM Author a", Author.class).list();
+            authors = session.createQuery("SELECT a FROM Author a ORDER BY a.id", Author.class).list();
         }
         return authors;
     }

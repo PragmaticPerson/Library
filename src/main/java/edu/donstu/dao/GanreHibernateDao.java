@@ -24,7 +24,7 @@ public class GanreHibernateDao {
     public List<Ganre> findAll() {
         List<Ganre> ganres;
         try (Session session = sessionFactory.openSession()) {
-            ganres = session.createQuery("SELECT g FROM Ganre g", Ganre.class).list();
+            ganres = session.createQuery("SELECT g FROM Ganre g ORDER BY g.id", Ganre.class).list();
         }
         return ganres;
     }

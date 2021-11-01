@@ -38,9 +38,8 @@ public class BookHibernateDao {
     }
 
     public List<Book> findAllByName(String name) {
-        String query = "SELECT b FROM Book b WHERE lower(b.name) LIKE '%" + name.toLowerCase() + "%'";
-
         List<Book> books;
+        String query = "SELECT b FROM Book b WHERE lower(b.name) LIKE '%" + name.toLowerCase() + "%'";
         try (Session session = sessionFactory.openSession()) {
             books = session.createQuery(query, Book.class).list();
         }
@@ -49,17 +48,9 @@ public class BookHibernateDao {
 
     public Book getOne(int id) {
         Book book;
+        String query = "SELECT b FROM Book b WHERE b.id = " + id;
         try (Session session = sessionFactory.openSession()) {
-            var builder = session.getCriteriaBuilder();
-            var query = builder.createQuery(Book.class);
-            Root<Book> order = query.from(Book.class);
-
-            order.join("ganre");
-            order.join("author");
-
-            query.where(builder.equal(order.get("id"), id));
-
-            book = session.createQuery(query).getSingleResult();
+            book = session.createQuery(query, Book.class).getSingleResult();
         }
         return book;
     }
