@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="UTF-8">
-<title>Add new author</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<head th:include="fragments/header :: headerFragment">
+    <title id="pageTitle">Add new author</title>
 </head>
 <body>
 	<div class="container">
@@ -19,24 +17,40 @@
             </div>
 			<div class="d-flex justify-content-center m-3">
 				<form class="w-50" action="#" th:action="@{/authors/add}" th:object="${author}" method="post">
-					<div class="form-group row">
-						<label class="col">First name:</label>
-						<input class="col" type="text" th:field="*{firstName}" required/>
+					<div class="row my-1">
+					   <div class="col">
+					        <label class="col-form-label">First name:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{firstName}" required/>
+                        </div>
 					</div>
-					<div class="form-group row">
-                        <label class="col">Last name:</label>
-                        <input class="col" type="text" th:field="*{lastName}" required/>
+					<div class="row my-1">
+					   <div class="col">
+                            <label class="col-form-label">Last name:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{lastName}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Birthday:</label>
-                        <input class="col" type="date" th:field="*{birthday}" required/>
+                    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Birthday:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="date" th:field="*{birthday}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Date of death:</label>
-                        <input class="col" type="date" th:field="*{dateOfDeath}"/>
+                    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Date of death:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="date" th:field="*{dateOfDeath}"/>
+                        </div>
                     </div>
                     
-					<div class="form-group row">
+					<div class="row my-1">
 						<input class="btn m-1 btn-success col" type="submit" value="Save" />
 						<input class="btn m-1 btn-secondary col" type="reset" value="Reset" />
 					</div>

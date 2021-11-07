@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="UTF-8">
-<title>Add new book</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<head th:include="fragments/header :: headerFragment">
+    <title id="pageTitle">Add new book</title>
 </head>
 <body>
 	<div class="container">
@@ -19,33 +17,53 @@
             </div>
 			<div class="d-flex justify-content-center m-3">
 				<form class="w-50" action="#" th:action="@{/books/add}" th:object="${book}" method="post">
-					<div class="form-group row">
-						<label class="col">Name:</label>
-						<input class="col" type="text" th:field="*{name}" required/>
-					</div>
-					<div class="form-group row">
-                        <label class="col">Description:</label>
-                        <textarea class="col" th:field="*{description}" placeholder="Description up to 200 characters" maxlength="200" required></textarea>
+				    <div class="row my-1">
+                       <div class="col">
+                            <label class="col-form-label">Name:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{name}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Release date:</label>
-                        <input class="col" type="text" th:field="*{releaseDate}" required/>
+                    <div class="row my-1">
+                       <div class="col">
+                            <label class="col-form-label">Description:</label>
+                        </div>
+                        <div class="col">
+                            <textarea class="form-control" th:field="*{description}" placeholder="Description up to 200 characters" maxlength="200" required></textarea>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Author:</label>
-                        <select class="col pl-3" id="selectAuthor" th:field="*{author}" required>
-                            <option value="-1" hidden="">Please select...</option>
-                            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.firstName + ' ' + author.lastName}"></option>
-                        </select>
+                    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Release date:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{releaseDate}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Ganre:</label>
-                        <select class="col pl-3" id="selectGanre" th:field="*{ganre}" required>
-                            <option value="-1" hidden="">Please select...</option>
-                            <option th:each="ganre : ${ganres}" th:value="${ganre.id}" th:text="${ganre.name}"></option>
-                        </select>
+                    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Author:</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" th:field="*{author.id}" required>
+	                            <option value="-1" hidden="">Please select...</option>
+	                            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.firstName + ' ' + author.lastName}"></option>
+                            </select>   
+                        </div>
                     </div>
-                    
+				    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Ganre:</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" th:field="*{ganre.id}" required>
+	                            <option value="-1" hidden="">Please select...</option>
+	                            <option th:each="ganre : ${ganres}" th:value="${ganre.id}" th:text="${ganre.name}"></option>
+	                        </select>
+                        </div>
+                    </div>
+				                        
 					<div class="form-group row">
 						<input class="btn m-1 btn-success col" type="submit" value="Save" />
 						<input class="btn m-1 btn-secondary col" type="reset" value="Reset" />
