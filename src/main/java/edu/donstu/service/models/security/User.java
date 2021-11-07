@@ -9,21 +9,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 import edu.donstu.validation.security.annotations.UserConstraint;
 
 @Entity
 @Table(name = "s_user")
 @UserConstraint
-public class User implements UserDetails {
+public class User implements UserDetails, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +41,7 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
-    
+
     @Column(name = "enabled")
     private boolean enabled = true;
 
@@ -192,4 +190,25 @@ public class User implements UserDetails {
                 + ", passwordConfirm=" + passwordConfirm + ", roles=" + roles + "]";
     }
 
+    @Override
+    public User clone() throws CloneNotSupportedException {
+        User u = new User();
+
+        if (this.username.isEmpty()) {
+            u.setUsername("Guest");
+        } else {
+            u.setUsername(this.username);
+        }
+
+        if (this.password.isEmpty()) {
+            u.setPassword("qwerty");
+        } else {
+            u.setPassword(this.password);
+        }
+
+        u.setId(this.id);
+        u.setEmail(this.email);
+        u.setPasswordConfirm(this.passwordConfirm);
+        return u;
+    }
 }
