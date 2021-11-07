@@ -1,5 +1,6 @@
 package edu.donstu.dao;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
@@ -40,6 +41,17 @@ public class BookHibernateDao {
     public List<Book> findAllByName(String name) {
         List<Book> books;
         String query = "SELECT b FROM Book b WHERE lower(b.name) LIKE '%" + name.toLowerCase() + "%'";
+        try (Session session = sessionFactory.openSession()) {
+            books = session.createQuery(query, Book.class).list();
+        }
+        return books;
+    }
+
+    public List<Book> findAllHundredYear() {
+        List<Book> books;
+        int year = LocalDate.now().getYear() - 100;
+
+        String query = "SELECT b FROM Book b WHERE b.releaseDate > " + year;
         try (Session session = sessionFactory.openSession()) {
             books = session.createQuery(query, Book.class).list();
         }

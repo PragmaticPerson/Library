@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -21,6 +22,9 @@ public class Ganre {
     @NotBlank(message = "Ganre name not valid")
     private String name;
 
+    @Transient
+    private long count;
+
     public Ganre() {
         super();
     }
@@ -28,6 +32,13 @@ public class Ganre {
     public Ganre(String name) {
         super();
         this.name = name;
+    }
+
+    public Ganre(int id, @NotBlank(message = "Ganre name not valid") String name, long count) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.count = count;
     }
 
     public int getId() {
@@ -44,6 +55,14 @@ public class Ganre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
     }
 
     @Override

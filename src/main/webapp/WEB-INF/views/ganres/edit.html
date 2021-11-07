@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="UTF-8">
-<title>Edit ganre</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<head th:include="fragments/header :: headerFragment">
+    <title id="pageTitle">Edit ganre</title>
 </head>
 <body>
     <div class="container">
@@ -20,12 +18,20 @@
             <div class="d-flex justify-content-center m-3">
                 <form class="w-50" action="#" th:action="@{/ganres/{id}(id=${ganre.id})}" th:object="${ganre}" method="post">
                     <div class="form-group row">
-                        <label class="col">id:</label>
-                        <input class="col" type="text" th:field="*{id}" disabled="disabled" required/>
+                        <div class="col">
+                            <label class="col-form-label">id:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{id}" disabled="disabled" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Ganre name:</label>
-                        <input class="col" type="text" th:field="*{name}" required/>
+                    <div class="row my-1">
+                       <div class="col">
+                            <label class="col-form-label">Ganre name:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{name}" required/>
+                        </div>
                     </div>
                     
                     <div class="form-group row">

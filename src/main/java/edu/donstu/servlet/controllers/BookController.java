@@ -27,20 +27,32 @@ import edu.donstu.service.services.security.UserService;
 @RequestMapping("/books")
 public class BookController {
 
-    @Autowired
     private BookService bookService;
-    @Autowired
     private GanreService ganreService;
-    @Autowired
     private AuthorService authorService;
-    @Autowired
     private UserService userService;
-    @Autowired
     private CommentService commentService;
+
+    @Autowired
+    public BookController(BookService bookService, GanreService ganreService, AuthorService authorService,
+            UserService userService, CommentService commentService) {
+        super();
+        this.bookService = bookService;
+        this.ganreService = ganreService;
+        this.authorService = authorService;
+        this.userService = userService;
+        this.commentService = commentService;
+    }
 
     @GetMapping()
     public String findAllPage(Model model) {
         model.addAttribute("books", bookService.findAll());
+        return "books/all";
+    }
+
+    @GetMapping("/last")
+    public String findAllLast100YearsPage(Model model) {
+        model.addAttribute("books", bookService.findAllHundredYear());
         return "books/all";
     }
 

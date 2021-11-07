@@ -26,6 +26,10 @@ public class BookService {
         return bookRepository.findAllByName(name);
     }
 
+    public List<Book> findAllHundredYear() {
+        return bookRepository.findAllHundredYear();
+    }
+
     public Book getOne(int id) {
         return bookRepository.getOne(id);
     }

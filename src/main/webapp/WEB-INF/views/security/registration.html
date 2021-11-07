@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="UTF-8">
-<title>Register page</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<head th:include="fragments/header :: headerFragment">
+    <title id="pageTitle">Register page</title>
 </head>
 <body>
     <div class="container">
@@ -19,21 +17,37 @@
             </div>
             <div class="d-flex justify-content-center m-3">
                 <form class="w-50" action="#" th:action="@{/registration}" th:object="${user}" method="post">
-                    <div class="form-group row">
-                        <label class="col">Login:</label>
-                        <input class="col" type="text" th:field="*{username}" required/>
+                    <div class="row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Login:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="text" th:field="*{username}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">E-mail:</label>
-                        <input class="col" type="email" th:field="*{email}" required/>
+                    <div class="form-group row my-1">
+                        <div class="col">
+                            <label class="col-form-label">E-mail:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="email" th:field="*{email}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Password:</label>
-                        <input class="col" type="password" th:field="*{password}" required/>
+                    <div class="form-group row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Password:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="password" th:field="*{password}" required/>
+                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col">Password again:</label>
-                        <input class="col" type="password" th:field="*{passwordConfirm}" required/>
+                    <div class="form-group row my-1">
+                        <div class="col">
+                            <label class="col-form-label">Password again:</label>
+                        </div>
+                        <div class="col">
+                            <input class="form-control" type="password" th:field="*{passwordConfirm}" required/>
+                        </div>
                     </div>
                     
                     <div class="form-group row">

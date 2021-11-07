@@ -23,8 +23,13 @@ public class GanreHibernateDao {
 
     public List<Ganre> findAll() {
         List<Ganre> ganres;
+        String query = "SELECT NEW edu.donstu.service.models.Ganre(g.id, g.name, COUNT(b.ganre.id)) " //
+                + "FROM Ganre g " //
+                + "INNER JOIN Book b ON b.ganre.id = g.id " //
+                + "GROUP BY g.id, g.name " //
+                + "ORDER BY g.id";
         try (Session session = sessionFactory.openSession()) {
-            ganres = session.createQuery("SELECT g FROM Ganre g ORDER BY g.id", Ganre.class).list();
+            ganres = session.createQuery(query, Ganre.class).list();
         }
         return ganres;
     }
