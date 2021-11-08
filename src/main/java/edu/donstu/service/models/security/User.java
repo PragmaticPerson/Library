@@ -16,12 +16,13 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import edu.donstu.service.models.lab.AUser;
 import edu.donstu.validation.security.annotations.UserConstraint;
 
 @Entity
 @Table(name = "s_user")
 @UserConstraint
-public class User implements UserDetails, Cloneable {
+public class User extends AUser implements UserDetails, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -209,6 +210,13 @@ public class User implements UserDetails, Cloneable {
         u.setId(this.id);
         u.setEmail(this.email);
         u.setPasswordConfirm(this.passwordConfirm);
+        u.setRoles(this.roles);
         return u;
+    }
+
+    @Override
+    public void showInfo() {
+        System.out.println("Show info:");
+        System.out.println(this);
     }
 }
