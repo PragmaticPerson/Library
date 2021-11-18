@@ -25,6 +25,7 @@
 						<th scope="col">Last name</th>
 						<th scope="col">Birthday</th>
 						<th scope="col">Day of death</th>
+                        <th scope="col">Count</th>
 						<th sec:authorize="hasRole('ADMIN')" scope="col"></th>
 					</tr>
 				</thead>
@@ -39,6 +40,7 @@
 						<td><span th:text="${author.birthday}"></span></td>
 						<td><span
 							th:text="${author.dateOfDeath != null} ? ${author.dateOfDeath} : 'No'"></span></td>
+                        <td><span th:text="${author.count}"></span></td>
 						<td sec:authorize="hasRole('ADMIN')" class="w-100 d-inline-flex justify-content-end">
 							<div>
 								<a class="fa fa-pencil custom-btn m-1 mx-2"

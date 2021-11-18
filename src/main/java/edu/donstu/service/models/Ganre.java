@@ -21,13 +21,18 @@ public class Ganre {
     @NotBlank(message = "Ganre name not valid")
     private String name;
 
+    @Column(name = "count")
+    private int count;
+
     public Ganre() {
         super();
     }
 
-    public Ganre(String name) {
+    public Ganre(int id, @NotBlank(message = "Ganre name not valid") String name, int count) {
         super();
+        this.id = id;
         this.name = name;
+        this.count = count;
     }
 
     public int getId() {
@@ -46,10 +51,19 @@ public class Ganre {
         this.name = name;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + count;
         result = prime * result + id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
@@ -64,6 +78,8 @@ public class Ganre {
         if (getClass() != obj.getClass())
             return false;
         Ganre other = (Ganre) obj;
+        if (count != other.count)
+            return false;
         if (id != other.id)
             return false;
         if (name == null) {
@@ -76,7 +92,6 @@ public class Ganre {
 
     @Override
     public String toString() {
-        return "Ganre [id=" + id + ", name=" + name + "]";
+        return "Ganre [id=" + id + ", name=" + name + ", count=" + count + "]";
     }
-
 }

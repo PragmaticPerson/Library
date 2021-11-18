@@ -40,14 +40,22 @@ public class Author {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfDeath;
 
+    @Column(name = "count")
+    private int count;
+
     public Author() {
     }
 
-    public Author(String firstName, String lastName, LocalDate birthday, LocalDate dateOfDeath) {
+    public Author(int id, @NotBlank(message = "Firstname not blank") String firstName,
+            @NotBlank(message = "Lastname not blank") String lastName, LocalDate birthday, LocalDate dateOfDeath,
+            int count) {
+        super();
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.dateOfDeath = dateOfDeath;
+        this.count = count;
     }
 
     public int getId() {
@@ -90,11 +98,20 @@ public class Author {
         this.dateOfDeath = dateOfDeath;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
+        result = prime * result + count;
         result = prime * result + ((dateOfDeath == null) ? 0 : dateOfDeath.hashCode());
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + id;
@@ -115,6 +132,8 @@ public class Author {
             if (other.birthday != null)
                 return false;
         } else if (!birthday.equals(other.birthday))
+            return false;
+        if (count != other.count)
             return false;
         if (dateOfDeath == null) {
             if (other.dateOfDeath != null)
@@ -139,7 +158,7 @@ public class Author {
     @Override
     public String toString() {
         return "Author [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", birthday=" + birthday
-                + ", dateOfDeath=" + dateOfDeath + "]";
+                + ", dateOfDeath=" + dateOfDeath + ", count=" + count + "]";
     }
 
 }

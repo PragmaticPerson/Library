@@ -22,6 +22,7 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Ganre name</th>
+                        <th scope="col">Count</th>
 						<th sec:authorize="hasRole('ADMIN')" scope="col"></th>
 					</tr>
 				</thead>
@@ -32,6 +33,7 @@
 					<tr th:each="ganre : ${ganres}">
 						<td><span th:text="${ganre.id}"></span></td>
 						<td><span th:text="${ganre.name}"></span></td>
+                        <td><span th:text="${ganre.count}"></span></td>
 						<td sec:authorize="hasRole('ADMIN')" class="w-100 d-inline-flex justify-content-end">
 							<div>
 								<a class="fa fa-pencil custom-btn m-1 mx-2"
